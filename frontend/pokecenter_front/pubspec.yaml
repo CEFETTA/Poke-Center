@@ -33,6 +33,7 @@ dependencies:
   build_runner: ^1.12.2
   mobx_codegen: ^2.0.1+2
   auto_route: ^1.0.2
+  dio: ^4.0.0
 
 dev_dependencies:
   flutter_test:
