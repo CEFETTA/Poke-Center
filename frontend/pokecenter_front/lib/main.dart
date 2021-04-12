@@ -5,6 +5,8 @@ void main() {
   runApp(MyApp());
 }
 
+// final _appRouter = AppRouter();
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
