@@ -32,6 +32,11 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Início"),
+        BottomNavigationBarItem(icon: Icon(Icons.business), label: "Clínica"),
+        BottomNavigationBarItem(icon: Icon(Icons.admin_panel_settings), label: "Administração")
+      ],),
       floatingActionButton: FloatingActionButton(
         onPressed: counter.increment,
         tooltip: 'Aumentar contador',
