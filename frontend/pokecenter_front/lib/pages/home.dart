@@ -6,8 +6,8 @@ import './tabs/info.dart';
 import '../globals.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  HomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title ?? "Home"),
       ),
       body: _getTab(_pageIndex),
       bottomNavigationBar: BottomNavigationBar(
