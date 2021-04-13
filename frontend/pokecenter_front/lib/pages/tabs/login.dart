@@ -18,7 +18,6 @@ class LoginTab extends StatelessWidget {
           Padding(
             padding: fieldPadding,
             child: TextField(
-              obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'E-mail',
