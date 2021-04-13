@@ -37,9 +37,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title ?? "Home"),
-      ),
       body: _getTab(_pageIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:pokecenter_front/globals.dart';
 import 'package:pokecenter_front/utils/company_info.dart';
@@ -7,7 +8,7 @@ import '../../mock/mock_company_info.dart';
 import '../../mock/mock_info_april.dart';
 
 class InfoTab extends StatelessWidget {
-  const InfoTab({Key? key}) : super(key: key);
+  InfoTab({Key? key}) : super(key: key);
 
   Widget buildReportCard(InfoReport report) {
     return Container(
@@ -32,50 +33,105 @@ class InfoTab extends StatelessWidget {
   }
 
   List<Widget> buildCompanyInfoFragments(List<CompanyInfo> companyInfos) {
-    const positionRight = false;
     return companyInfos
         .map((companyInfo) => Padding(
-          padding: EdgeInsets.only(bottom: 20),
-          child: IntrinsicWidth(
-            child: Row(
-              children: buildCompanyInfoFragment(
-                companyInfo,
-                companyInfos.indexOf(companyInfo)
+              padding: EdgeInsets.only(bottom: 20),
+              child: IntrinsicWidth(
+                child: Row(
+                  children: buildCompanyInfoFragment(
+                      companyInfo, companyInfos.indexOf(companyInfo)),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
               ),
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-          ),
-        ))
+            ))
         .toList();
   }
 
   List<Widget> buildCompanyInfoFragment(CompanyInfo companyInfo, int index) {
     List<Widget> fragment = [
-      Expanded(child: Container(child: Text(companyInfo.text), width: 500,)),
+      Expanded(
+          child: Container(
+        child: Text(
+          companyInfo.text,
+          style: TextStyle(fontSize: 18),
+          textAlign: TextAlign.center,
+        ),
+        width: 500,
+      )),
       Padding(padding: EdgeInsets.all(15)),
-      ClipRRect( borderRadius: BorderRadius.circular(15), child: Image(image: AssetImage(companyInfo.srcUrl), width: 300, ),)
+      ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image(
+          image: AssetImage(companyInfo.srcUrl),
+          fit: BoxFit.fitHeight,
+          height: 150,
+          width: 200,
+        ),
+      )
     ];
     return index.isEven ? fragment : fragment.reversed.toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    const imgList = [
+      "assets/images/report1_thumb.jpg",
+      "assets/images/report1_thumb.jpg",
+      "assets/images/report1_thumb.jpg",
+    ];
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(20),
-        child: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            ...buildHeading("Informações:"),
-            ...buildCompanyInfoFragments(companyInfos
-                .map((info) => CompanyInfo.fromJson(info))
-                .toList()),
-            ...buildHeading("Novidades:"),
-            ...infoReports
-                .map((report) => buildReportCard(InfoReport.fromJson(report)))
-                .toList()
-          ]),
-        ),
+      child: Column(
+        children: [
+          Container(
+              child: Column(
+            children: <Widget>[
+              CarouselSlider(
+                options: CarouselOptions(
+                  autoPlay: true,
+                  aspectRatio: 2.0,
+                  enlargeCenterPage: true,
+                ),
+                items: _buildImageSliders(imgList),
+              ),
+            ],
+          )),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...buildHeading("História de Sucesso:"),
+                    ...buildCompanyInfoFragments(companyInfos
+                        .map((info) => CompanyInfo.fromJson(info))
+                        .toList()),
+                    ...buildHeading("Novidades:"),
+                    ...infoReports
+                        .map((report) =>
+                            buildReportCard(InfoReport.fromJson(report)))
+                        .toList()
+                  ]),
+            ),
+          )
+        ],
       ),
     );
+  }
+
+  List<Widget> _buildImageSliders(List<String> imgList) {
+    return imgList
+        .map((item) => Container(
+              child: Container(
+                margin: EdgeInsets.all(5.0),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    child: Stack(
+                      children: <Widget>[
+                        Image.asset(item, fit: BoxFit.cover, width: 1000.0),
+                      ],
+                    )),
+              ),
+            ))
+        .toList();
   }
 }
