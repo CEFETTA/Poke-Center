@@ -6,6 +6,7 @@ class LoginTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const fieldPadding = EdgeInsets.symmetric(horizontal: 200, vertical: 20);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -15,7 +16,7 @@ class LoginTab extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(200, 20, 200, 20),
+            padding: fieldPadding,
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -25,7 +26,7 @@ class LoginTab extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(200, 0, 200, 20),
+            padding: fieldPadding,
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -35,7 +36,7 @@ class LoginTab extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: EdgeInsets.fromLTRB(200, 0, 200, 20),
+              padding: fieldPadding,
               child: ElevatedButton.icon(
                 onPressed: () {
                   print('login');
