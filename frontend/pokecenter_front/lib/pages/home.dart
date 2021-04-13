@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pokecenter_front/pages/tabs/login.dart';
 
 import './tabs/not_found.dart';
 import './tabs/info.dart';
@@ -25,6 +26,8 @@ class _HomePageState extends State<HomePage> {
     switch (index) {
       case 0:
         return InfoTab();
+      case 4:
+        return LoginTab();
       default:
         return NotFound();
     }
@@ -32,9 +35,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    int _indexLogin = 4;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          ElevatedButton.icon(
+            onPressed: () {
+              _onItemTapped(_indexLogin);
+            },
+            icon: Icon(Icons.login, size: 16),
+            label: Text("Faça seu login"),
+          )
+        ],
       ),
       body: _getTab(_pageIndex),
       bottomNavigationBar: BottomNavigationBar(
