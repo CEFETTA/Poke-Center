@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     switch (index) {
       case 0:
         return InfoTab();
-      case 4:
+      case 2:
         return LoginTab();
       default:
         return NotFound();
@@ -36,20 +36,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    int _indexLogin = 4;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title ?? "Home"),
-        actions: <Widget>[
-          ElevatedButton.icon(
-            onPressed: () {
-              _onItemTapped(_indexLogin);
-            },
-            icon: Icon(Icons.login, size: 16),
-            label: Text("Faça seu login"),
-          )
-        ],
       ),
       body: _getTab(_pageIndex),
       bottomNavigationBar: BottomNavigationBar(
