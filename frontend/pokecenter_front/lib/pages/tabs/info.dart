@@ -12,12 +12,15 @@ class InfoTab extends StatelessWidget {
 
   Widget buildReportCard(InfoReport report) {
     return Container(
-      child: Card(
+      child: GestureDetector(
+        child: Card(
           child: ListTile(
-        leading: CircleAvatar(backgroundImage: AssetImage(report.srcUrl)),
-        title: Text(report.title),
-        subtitle: Text(report.text),
-      )),
+            leading: CircleAvatar(backgroundImage: AssetImage(report.srcUrl)),
+            title: Text(report.title),
+            subtitle: Text(report.text),
+          )
+        ),
+      )
     );
   }
 
@@ -83,9 +86,10 @@ class InfoTab extends StatelessWidget {
       child: Column(
         children: [
           Container(
-              child: Column(
-            children: <Widget>[
-              CarouselSlider(
+            width: 1000,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: CarouselSlider(
                 options: CarouselOptions(
                   autoPlay: true,
                   aspectRatio: 2.0,
@@ -93,8 +97,8 @@ class InfoTab extends StatelessWidget {
                 ),
                 items: _buildImageSliders(imgList),
               ),
-            ],
-          )),
+            )
+          ),
           Padding(
             padding: EdgeInsets.all(20),
             child: Center(
@@ -105,6 +109,7 @@ class InfoTab extends StatelessWidget {
                     ...buildCompanyInfoFragments(companyInfos
                         .map((info) => CompanyInfo.fromJson(info))
                         .toList()),
+                    ...buildHeading("Cultura:"),
                     ...buildHeading("Novidades:"),
                     ...infoReports
                         .map((report) =>
