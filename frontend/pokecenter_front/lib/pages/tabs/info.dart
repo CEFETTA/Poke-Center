@@ -50,9 +50,9 @@ class InfoTab extends StatelessWidget {
 
   Widget buildCultureValue(IconData icon, String title, String text) {
     return Container(
-      width: 200,
-      child: Card(
-        child: Padding(
+        width: 200,
+        child: Card(
+            child: Padding(
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
@@ -62,9 +62,7 @@ class InfoTab extends StatelessWidget {
               Text(text)
             ],
           ),
-        )
-      )
-    );
+        )));
   }
 
   List<Widget> buildCompanyInfoFragment(CompanyInfo companyInfo, int index) {
@@ -96,8 +94,8 @@ class InfoTab extends StatelessWidget {
   Widget build(BuildContext context) {
     const imgList = [
       "assets/images/report1_thumb.jpg",
-      "assets/images/report1_thumb.jpg",
-      "assets/images/report1_thumb.jpg",
+      "assets/images/clinica.jpg",
+      "assets/images/pikachu_doente.jpg",
     ];
     return SingleChildScrollView(
       child: Column(
@@ -130,9 +128,12 @@ class InfoTab extends StatelessWidget {
                       child: Row(
                         // Missão Visão Valores
                         children: [
-                          buildCultureValue(Icons.golf_course_sharp, "Missão", "A missão da Pokecenter é trazer qualidade de vida e saúde a todos"),
-                          buildCultureValue(Icons.remove_red_eye, "Visão", "A visão da PokeCenter é ser a maior empresa da próxima década"),
-                          buildCultureValue(Icons.book, "Valores", "A PokeCenter valoriza honestidade, dedicação e transparência"),
+                          buildCultureValue(Icons.golf_course_sharp, "Missão",
+                              "A missão da Pokecenter é trazer qualidade de vida e saúde a todos"),
+                          buildCultureValue(Icons.remove_red_eye, "Visão",
+                              "A visão da PokeCenter é ser a maior empresa da próxima década"),
+                          buildCultureValue(Icons.book, "Valores",
+                              "A PokeCenter valoriza honestidade, dedicação e transparência"),
                         ],
                       ),
                     ),

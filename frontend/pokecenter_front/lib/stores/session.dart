@@ -19,7 +19,17 @@ abstract class _Session with Store {
   @observable
   bool? isLoggedIn;
 
+  @action
   _Session(this.token, this.employee, this.person, this.medic) {
+    this.isLoggedIn = false;
+  }
+
+  @action
+  login(String token, Employee employee, Person person, Medic medic) {
+    this.token = token;
+    this.employee = employee;
+    this.person = person;
+    this.medic = medic;
     this.isLoggedIn = true;
   }
 
