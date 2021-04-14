@@ -1,5 +1,5 @@
 class Employee {
-  String cpf;
+  int cpf;
   String dealDate;
   double salary;
 

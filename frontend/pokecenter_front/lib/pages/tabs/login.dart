@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pokecenter_front/stores/session.dart';
+import 'package:pokecenter_front/utils/employee.dart';
+import 'package:pokecenter_front/utils/medic.dart';
+import 'package:pokecenter_front/utils/person.dart';
 
 import '../../globals.dart';
 
@@ -18,7 +24,32 @@ class LoginTab extends StatelessWidget {
     try {
       var response =
           await dio.post('/login', data: {'email': login, 'senha': senha});
-      print(response);
+
+      var funcionario = response.data["funcionario"];
+
+      var token = response.data["token"] as String;
+
+      var employee = Employee(funcionario["cpf"], funcionario["data_contrato"],
+          funcionario["salario"]);
+
+      var person = Person(
+        response.data["pessoa"]["cpf"],
+        response.data["pessoa"]["nome"],
+        response.data["pessoa"]["email"],
+        response.data["pessoa"]["telefone"],
+        response.data["pessoa"]["cep"],
+        response.data["pessoa"]["logradouro"],
+        response.data["pessoa"]["bairro"],
+        response.data["pessoa"]["cidade"],
+        response.data["pessoa"]["estado"],
+      );
+
+      var medic = Medic(
+          response.data["medico"]["cpf"],
+          response.data["medico"]["especialidade"],
+          response.data["medico"]["crm"]);
+
+      var session = Session(token, employee, person, medic);
     } catch (e) {
       print(e);
     }

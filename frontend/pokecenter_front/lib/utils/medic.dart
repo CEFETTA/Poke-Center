@@ -1,5 +1,5 @@
 class Medic {
-  String cpf;
+  int cpf;
   String area;
   String crm;
 
