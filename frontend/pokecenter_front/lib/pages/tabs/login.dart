@@ -50,6 +50,8 @@ class LoginTab extends StatelessWidget {
           response.data["medico"]["crm"]);
 
       var session = Session(token, employee, person, medic);
+
+      print(session);
     } catch (e) {
       print(e);
     }

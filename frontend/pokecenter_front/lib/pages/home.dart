@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pokecenter_front/pages/tabs/addresses.dart';
 import 'package:pokecenter_front/pages/tabs/login.dart';
+import 'package:pokecenter_front/pages/tabs/register_new_address.dart';
 import 'dart:html';
 
 import './tabs/not_found.dart';
@@ -33,6 +34,8 @@ class _HomePageState extends State<HomePage> {
         return Addresses();
       case 2:
         return LoginTab();
+      case 3:
+        return RegisterNewAddress();
       default:
         return NotFound();
     }
@@ -43,12 +46,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _getTab(_pageIndex),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Início"),
           BottomNavigationBarItem(
               icon: Icon(Icons.business), label: "Endereços"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.admin_panel_settings), label: "Administração")
+              icon: Icon(Icons.admin_panel_settings), label: "Administração"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.map), label: "Cadastrar Endereço")
         ],
         currentIndex: _pageIndex,
         onTap: _onItemTapped,
