@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pokecenter_front/pages/tabs/addresses.dart';
 import 'package:pokecenter_front/pages/tabs/login.dart';
 import 'dart:html';
 
@@ -27,6 +28,8 @@ class _HomePageState extends State<HomePage> {
     switch (index) {
       case 0:
         return InfoTab();
+      case 1:
+        return Addresses();
       case 2:
         return LoginTab();
       default:
@@ -46,6 +49,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.admin_panel_settings), label: "Administração")
         ],
+        currentIndex: _pageIndex,
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
