@@ -83,18 +83,20 @@ class InfoTab extends StatelessWidget {
       child: Column(
         children: [
           Container(
-              child: Column(
-            children: <Widget>[
-              CarouselSlider(
-                options: CarouselOptions(
-                  autoPlay: true,
-                  aspectRatio: 2.0,
-                  enlargeCenterPage: true,
+            width: 1000,
+            child: Column(
+              children: <Widget>[
+                CarouselSlider(
+                  options: CarouselOptions(
+                    autoPlay: true,
+                    aspectRatio: 2.0,
+                    enlargeCenterPage: true,
+                  ),
+                  items: _buildImageSliders(imgList),
                 ),
-                items: _buildImageSliders(imgList),
-              ),
-            ],
-          )),
+              ],
+            )
+          ),
           Padding(
             padding: EdgeInsets.all(20),
             child: Center(
