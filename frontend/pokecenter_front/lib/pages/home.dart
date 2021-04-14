@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pokecenter_front/pages/tabs/addresses.dart';
+import 'package:pokecenter_front/pages/tabs/admin.dart';
 import 'package:pokecenter_front/pages/tabs/login.dart';
 import 'dart:html';
 
 import './tabs/not_found.dart';
 import './tabs/info.dart';
 import '../globals.dart';
+
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, this.title}) : super(key: key);
@@ -32,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       case 1:
         return Addresses();
       case 2:
-        return LoginTab();
+        return session.isLoggedIn == true ? AdminPanel() : LoginTab();
       default:
         return NotFound();
     }
@@ -41,7 +43,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _getTab(_pageIndex),
+      body: Observer(
+        builder: (_) => _getTab(_pageIndex)
+      ,),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Início"),

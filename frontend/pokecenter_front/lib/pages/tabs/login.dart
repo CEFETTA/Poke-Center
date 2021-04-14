@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokecenter_front/stores/session.dart';
 import 'package:pokecenter_front/utils/employee.dart';
@@ -19,11 +16,9 @@ class LoginTab extends StatelessWidget {
     final login = _email.text;
     final senha = _password.text;
 
-    print("Login: $login , Senha: $senha ");
-
     try {
       var response =
-          await dio.post('/login', data: {'email': login, 'senha': senha});
+          await dio.post('/login', data: {"email": login, "senha": senha});
 
       var funcionario = response.data["funcionario"];
 
@@ -49,7 +44,8 @@ class LoginTab extends StatelessWidget {
           response.data["medico"]["especialidade"],
           response.data["medico"]["crm"]);
 
-      var session = Session(token, employee, person, medic);
+      session.login(token, employee, person, medic);
+      dio.options.headers = {"Authorization": 'Bearer ${token}'};
     } catch (e) {
       print(e);
     }
@@ -86,7 +82,7 @@ class LoginTab extends StatelessWidget {
                       controller: _password,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Password',
+                        labelText: 'Senha',
                       ),
                     ),
                   ),
