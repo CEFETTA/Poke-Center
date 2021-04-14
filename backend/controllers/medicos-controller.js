@@ -25,36 +25,43 @@ exports.getMedicos = async (req, res, next) => {
             return res.status(404).send({mensagem: 'Nenhum médico encontrado'});
         }
 
+        query = `SELECT * FROM AGENDA WHERE codigo_medico=?;`;
+
+        var medicos = [];
+        for(let i = 0; i < result.length; i++){
+            let medico = result[i];
+            const {cpf, data_contrato, salario, nome, email, telefone, cep, logradouro, bairro, cidade, estado, especialidade, crm} = medico;
+            var agendas = await mysql.execute(query, [cpf]);
+
+            medicos.push({
+                medico: {
+                    cpf: cpf,
+                    especialidade: especialidade,
+                    crm: crm
+                },
+                funcionario: {
+                    cpf: cpf,
+                    data_contrato: data_contrato,
+                    salario: salario,
+                },
+                pessoa: {
+                    cpf: cpf,
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    cep: cep,
+                    logradouro: logradouro,
+                    bairro: bairro,
+                    cidade: cidade,
+                    estado: estado
+                },
+                agendas: agendas
+            });
+        }
+
         const response = {
             quantidade: result.length,
-            medicos: result.map(medico => {
-
-                const {cpf, data_contrato, salario, nome, email, telefone, cep, logradouro, bairro, cidade, estado, especialidade, crm} = medico;
-
-                return {
-                    medico: {
-                        cpf: cpf,
-                        especialidade: especialidade,
-                        crm: crm
-                    },
-                    funcionario: {
-                        cpf: cpf,
-                        data_contrato: data_contrato,
-                        salario: salario,
-                    },
-                    pessoa: {
-                        cpf: cpf,
-                        nome: nome,
-                        email: email,
-                        telefone: telefone,
-                        cep: cep,
-                        logradouro: logradouro,
-                        bairro: bairro,
-                        cidade: cidade,
-                        estado: estado
-                    }
-                }
-            })
+            medicos: medicos
         }
         return res.status(200).send(response);
     }catch(error){
