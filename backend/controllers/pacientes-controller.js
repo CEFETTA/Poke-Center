@@ -96,7 +96,7 @@ exports.getPacientes = async (req, res, next) => {
                 return {
                     pessoa: {
                         cpf: paciente.cpf,
-                        nome: paciente.nome_dono,
+                        nome: paciente.nome,
                         email: paciente.email,
                         telefone: paciente.telefone,
                         cep: paciente.cep,
