@@ -8,7 +8,8 @@ class Person {
   String district;
   String city;
   String state;
+  dynamic schedules;
 
   Person(this.cpf, this.name, this.email, this.phone, this.zip, this.street,
-      this.district, this.city, this.state);
+      this.district, this.city, this.state, this.schedules);
 }
