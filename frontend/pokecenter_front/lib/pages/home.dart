@@ -6,12 +6,12 @@ import 'package:pokecenter_front/pages/tabs/admin.dart';
 import 'package:pokecenter_front/pages/tabs/galery.dart';
 import 'package:pokecenter_front/pages/tabs/login.dart';
 import 'package:pokecenter_front/pages/tabs/register_new_address.dart';
+import 'package:pokecenter_front/pages/tabs/schedule_consultation%20copy.dart';
 import 'dart:html';
 
 import './tabs/not_found.dart';
 import './tabs/info.dart';
 import '../globals.dart';
-
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, this.title}) : super(key: key);
@@ -39,6 +39,8 @@ class _HomePageState extends State<HomePage> {
         return Galery();
       case 3:
         return RegisterNewAddress();
+      case 4:
+        return ScheduleConsultation();
       case 5:
         return session.isLoggedIn == true ? AdminPanel() : LoginTab();
       default:
@@ -50,8 +52,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Observer(
-        builder: (_) => _getTab(_pageIndex)
-      ,),
+        builder: (_) => _getTab(_pageIndex),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: [
