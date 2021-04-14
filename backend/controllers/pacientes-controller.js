@@ -89,32 +89,39 @@ exports.getPacientes = async (req, res, next) => {
             return res.status(404).send({mensagem: 'Nenhum paciente encontrado'});
         }
 
-        const response = {
+        query = `SELECT * FROM AGENDA WHERE email=?;`;
+        var pacientes = [];
+        for(let i = 0; i < result.length; i++){
+            var paciente = result[i];
+            var agenda = await mysql.execute(query, [paciente.email]);
+            pacientes.push({
+                pessoa: {
+                    cpf: paciente.cpf,
+                    nome: paciente.nome,
+                    email: paciente.email,
+                    telefone: paciente.telefone,
+                    cep: paciente.cep,
+                    logradouro: paciente.logradouro,
+                    bairro: paciente.bairro,
+                    cidade: paciente.cidade,
+                    estado: paciente.estado
+                },
+                paciente: {
+                    cpf: paciente.cpf,
+                    codigo_pokemon: paciente.codigo_pokemon,
+                    nome_pokemon: paciente.nome_pokemon,
+                    peso: paciente.peso,
+                    altura: paciente.altura,
+                    tipo_sanguineo: paciente.tipo_sanguineo
+                },
+                agendas: agenda
+            });
+        }
+
+        var response = {
             mensagem: 'Pacientes listado abaixo',
             quantidade: result.length,
-            pacientes: result.map(paciente => {
-                return {
-                    pessoa: {
-                        cpf: paciente.cpf,
-                        nome: paciente.nome,
-                        email: paciente.email,
-                        telefone: paciente.telefone,
-                        cep: paciente.cep,
-                        logradouro: paciente.logradouro,
-                        bairro: paciente.bairro,
-                        cidade: paciente.cidade,
-                        estado: paciente.estado
-                    },
-                    paciente: {
-                        cpf: paciente.cpf,
-                        codigo_pokemon: paciente.codigo_pokemon,
-                        nome_pokemon: paciente.nome_pokemon,
-                        peso: paciente.peso,
-                        altura: paciente.altura,
-                        tipo_sanguineo: paciente.tipo_sanguineo
-                    }
-                }
-            })
+            pacientes: pacientes
         }
 
         return res.status(200).send(response);

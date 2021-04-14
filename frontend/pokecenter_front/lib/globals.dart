@@ -16,6 +16,6 @@ var options = BaseOptions(
   receiveTimeout: 20000,
 );
 
-Session session = Session("", Employee(0, "", 0), Person(0, "", "", 0, 0, "", "", "", ""), Medic(0, "", ""));
+Session session = Session("", Employee(0, "", 0), Person(0, "", "", 0, 0, "", "", "", "", 0), Medic(0, "", ""));
 
 final dio = Dio(options);

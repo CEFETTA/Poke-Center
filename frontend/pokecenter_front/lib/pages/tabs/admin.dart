@@ -20,14 +20,14 @@ class _AdminPanelState extends State<AdminPanel> {
       padding: EdgeInsets.all(20),
       child: Column(
         children: [
-            Observer(builder: (_) => buildEmployeeCard(_employeesCard)),
-            Observer(builder: (_) => buildEmployeeCard(_patientsCard))
-          ],
+          Observer(builder: (_) => buildPersonCard(_employeesCard)),
+          Observer(builder: (_) => buildPersonCard(_patientsCard)),
+        ],
       ),
     );
   }
 
-  Widget buildEmployeeCard(Future<Widget> future) {
+  Widget buildPersonCard(Future<Widget> future) {
     return FutureBuilder<Widget>(
       future: future, // a previously-obtained Future<String> or null
       builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
@@ -55,8 +55,8 @@ class _AdminPanelState extends State<AdminPanel> {
           children = const <Widget>[
             SizedBox(
               child: CircularProgressIndicator(),
-              width: 60,
-              height: 60,
+              width: 30,
+              height: 30,
             ),
             Padding(
               padding: EdgeInsets.only(top: 16),
@@ -77,10 +77,11 @@ class _AdminPanelState extends State<AdminPanel> {
 }
 
 Future<Widget> listEmployees() async {
-  var response = await dio.get('/funcionarios');
+  var response = await dio.get('/medicos');
 
-  List<dynamic> employees = response.data["funcionarios"].map((func) {
+  List<dynamic> employees = response.data["medicos"].map((func) {
     var funcPerson = func["pessoa"];
+    var agendas = func["agendas"];
     return Person(
         funcPerson["cpf"],
         funcPerson["nome"],
@@ -90,7 +91,8 @@ Future<Widget> listEmployees() async {
         funcPerson["logradouro"],
         funcPerson["bairro"],
         funcPerson["cidade"],
-        funcPerson["estado"]);
+        funcPerson["estado"],
+        agendas);
   }).toList();
   return ExpansionTile(
     title:
@@ -100,16 +102,32 @@ Future<Widget> listEmployees() async {
 }
 
 List<Widget> buildEmployeesTiles(List<dynamic> people) {
-  return people.map((person) => 
-    Card(
-      child: Padding(
-        padding: EdgeInsets.all(20),
-          child: Text('${person.name} (${person.email})'),
-        ),
-      
-      margin: EdgeInsets.all(5),
-    )
-  ).toList();
+  return people
+      .map((person) => ExpansionTile(
+          title: Card(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Text('${person.name} (${person.email})'),
+            ),
+            margin: EdgeInsets.all(5),
+          ),
+          children: person.schedules == null
+              ? []
+              : buildScheduleInfo(person.schedules)))
+      .toList();
+}
+
+List<Widget> buildScheduleInfo(List<dynamic> schedules) {
+  return schedules
+      .map((schedule) => Card(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                  '${schedule["nome_pokemon"]} (${schedule["data"].split("T")[0]}) ${schedule["horario"]}h'),
+            ),
+            margin: EdgeInsets.all(5),
+          ))
+      .toList();
 }
 
 Future<Widget> listPatients() async {
@@ -117,6 +135,7 @@ Future<Widget> listPatients() async {
 
   List<dynamic> employees = response.data["pacientes"].map((func) {
     var funcPerson = func["pessoa"];
+    var agendas = func["agendas"];
     return Person(
         funcPerson["cpf"],
         funcPerson["nome"],
@@ -126,11 +145,11 @@ Future<Widget> listPatients() async {
         funcPerson["logradouro"],
         funcPerson["bairro"],
         funcPerson["cidade"],
-        funcPerson["estado"]);
+        funcPerson["estado"],
+        agendas);
   }).toList();
   return ExpansionTile(
-    title:
-        Text('Gerencie a lista de ${response.data["quantidade"]} pacientes'),
+    title: Text('Gerencie a lista de ${response.data["quantidade"]} pacientes'),
     children: buildEmployeesTiles(employees),
   );
 }
